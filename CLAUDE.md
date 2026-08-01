@@ -28,7 +28,9 @@ template holds structure and section headings; the data file holds the words.
 | `src/_includes/header.njk` | Site header and nav. |
 | `src/_includes/footer.njk` | Site footer. |
 | `src/css/style.css` | All styles. Design tokens are the CSS custom properties in `:root`. |
+| `src/img/` | Web-ready images, copied through as-is and served from `/img/…`. |
 | `marketing/branding.md` | Brand guidelines — palette, typography, voice. Follow it for new copy and design. |
+| `marketing/barbell-mascot.png` | Full-resolution mascot source. Kept for regenerating the web versions; never published. |
 | `eleventy.config.js` | Build config and two template filters. |
 | `.github/workflows/deploy.yml` | The deploy pipeline. |
 
@@ -61,6 +63,27 @@ Nothing else needs touching.
 
 Copy `2026.json` to `2027.json`, edit it, and change `YEAR` in `games.js`. The
 old file stays in the repo as a record of that year's games.
+
+## Images
+
+Anything in `src/img/` is published at `/img/…`. Sources stay in `marketing/`,
+which is not copied to the site, so full-resolution art never ships.
+
+Ship WebP at two widths and let `srcset` choose. The mascot was produced from
+the source PNG with:
+
+```sh
+cwebp -q 80 -alpha_q 60 -m 6 in.png -o out.webp
+```
+
+`-alpha_q 60` is the setting that matters. The cutout's mask is nearly binary,
+so a high alpha quality almost doubles the file — 169 KB vs 87 KB — for no
+measurable difference once composited. Crop transparent padding away before
+encoding; the original was 2.4 MB largely because of empty canvas.
+
+The mascot appears in the markup twice: in the hero for desktop, and in
+`.mascot-band` above the footer for phones, where it would otherwise push the
+date and the register button below the fold. Only one is ever displayed.
 
 ## Conventions
 

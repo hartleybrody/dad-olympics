@@ -6,16 +6,22 @@ layout: base.njk
 {% set eventCount = games.events | length %}
 
 <section class="hero wrap">
-  <span class="hero-year">{{ games.year }}</span>
-  <h1 class="hero-title">
-    <span class="misprint" data-text="Dad">Dad</span>
-    <span class="misprint" data-text="Olympics">Olympics</span>
-  </h1>
-  <p class="hero-tagline">{{ games.tagline }}</p>
-  <p class="hero-meta">
-    <span>{{ games.date }}</span><span>{{ games.time }}</span><span>{{ games.place }}</span>
-  </p>
-  <a class="btn btn-primary" href="{{ games.registerUrl }}">Claim your bib</a>
+  <div class="hero-body">
+    <span class="hero-year">{{ games.year }}</span>
+    <h1 class="hero-title">
+      <span class="misprint" data-text="Dad">Dad</span>
+      <span class="misprint" data-text="Olympics">Olympics</span>
+    </h1>
+    <p class="hero-tagline">{{ games.tagline }}</p>
+    <p class="hero-meta">
+      <span>{{ games.date }}</span><span>{{ games.time }}</span><span>{{ games.place }}</span>
+    </p>
+    <a class="btn btn-primary" href="{{ games.registerUrl }}">Claim your bib</a>
+  </div>
+  <img class="hero-mascot" src="/img/barbell-mascot-680.webp"
+    srcset="/img/barbell-mascot-340.webp 340w, /img/barbell-mascot-680.webp 680w"
+    sizes="19rem" width="680" height="967" decoding="async"
+    alt="A grinning dad pressing a barbell overhead with one arm and holding a stuffed rabbit in the other." />
 </section>
 
 <section class="section wrap">
@@ -107,3 +113,10 @@ layout: base.njk
   </p>
   <p><a class="btn btn-primary" href="{{ games.registerUrl }}">Register your family</a></p>
 </section>
+
+<div class="mascot-band">
+  <img src="/img/barbell-mascot-340.webp"
+    srcset="/img/barbell-mascot-340.webp 340w, /img/barbell-mascot-680.webp 680w"
+    sizes="13rem" width="680" height="967" decoding="async" loading="lazy"
+    alt="A grinning dad pressing a barbell overhead with one arm and holding a stuffed rabbit in the other." />
+</div>

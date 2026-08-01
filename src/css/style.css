@@ -172,12 +172,16 @@ a:hover {
 /* ---------- Hero ---------- */
 
 .hero {
+  --hero-pad: clamp(2rem, 6vw, 3.75rem);
   position: relative;
   overflow: hidden;
   background: var(--teal);
   border-radius: var(--radius);
   margin-top: 2rem;
-  padding: clamp(2rem, 6vw, 3.75rem);
+  padding: var(--hero-pad);
+  display: grid;
+  align-items: end;
+  gap: 1.25rem;
 }
 
 /* Inset keyline, straight off the poster */
@@ -208,6 +212,37 @@ a:hover {
 .hero > * {
   position: relative;
   z-index: 1;
+}
+
+/* On a phone the mascot would push the date, the details, and the register
+   button below the fold, so it's dropped from the hero entirely and reappears
+   above the footer instead. See .mascot-band.
+
+   There are two <img> elements and only one is ever shown. Browsers do fetch
+   display:none images — loading="lazy" does not prevent it — but both point at
+   the same file, so in the common cases they resolve to one URL and one
+   request. Worst case is one spare 28 KB fetch at some pixel ratios. */
+.hero-mascot {
+  display: none;
+}
+
+/* Side by side once there's room for the text to keep a sensible measure.
+   The mascot is cropped at the waist, so it has to sit on the inner keyline —
+   floating it inside the box reads as a mistake rather than a crop. The
+   negative margin pulls it through the hero's bottom padding to land exactly
+   on the keyline's inner edge (14px inset + 2px border). */
+@media (min-width: 54rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .hero-mascot {
+    display: block;
+    width: min(26vw, 19rem);
+    height: auto;
+    margin-bottom: calc(16px - var(--hero-pad));
+  }
 }
 
 .hero-year {
@@ -316,13 +351,20 @@ a:hover {
 
 /* ---------- Events ---------- */
 
+/* Two across once there's room, so the four events read as a 2x2 block rather
+   than a row of three and an orphan. Stays single-column on phones. */
 .events {
   display: grid;
   gap: 1.25rem;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   margin: 1.75rem 0 0;
   padding: 0;
   list-style: none;
+}
+
+@media (min-width: 42rem) {
+  .events {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .event {
@@ -494,6 +536,31 @@ a:hover {
 
 .cta p {
   margin-inline: auto;
+}
+
+/* ---------- Mascot band (phones only) ---------- */
+
+/* Where the mascot goes on phones, having been dropped from the hero. He
+   stands on the footer's top keyline, which gives the waist crop something to
+   land on. The negative margin cancels the footer's own top margin so there's
+   no gap between his feet and that edge. */
+.mascot-band {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: -1rem;
+}
+
+.mascot-band img {
+  display: block;
+  width: min(58%, 13rem);
+  height: auto;
+}
+
+@media (min-width: 54rem) {
+  .mascot-band {
+    display: none;
+  }
 }
 
 /* ---------- Footer ---------- */

@@ -14,6 +14,7 @@ const NUMBER_WORDS = [
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
+  eleventyConfig.addPassthroughCopy("src/img");
 
   // "Four Official Events" — the count is spelled out in prose, so it has to
   // track the length of the events list rather than being written by hand.
