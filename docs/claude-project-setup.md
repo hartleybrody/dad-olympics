@@ -80,22 +80,27 @@ committing a file replaces it wholesale, so stale content silently destroys
 changes.
 
 WHERE THINGS LIVE
-- src/index.md — the entire homepage. HTML inside a Markdown file, with
-  Nunjucks {{ }} variables.
-- src/_data/site.json — date, time, place, registration URL, title, year.
-  Change these here, never inline in the page.
+Almost every content change is an edit to src/_data/2026.json. It holds the
+events, the schedule, the invitation copy, the date, and the registration URL.
+Prefer editing it over editing the page.
+- src/_data/2026.json — all content for the 2026 games
+- src/index.md — page structure. Loops over the data; holds section headings
+  and little else. Edit only for structural changes.
 - src/_includes/ — base.njk (page shell), header.njk, footer.njk
 - src/css/style.css — all styles
 - marketing/branding.md — palette, typography, voice. Follow it for any new
   copy or design.
 
 EDITING RULES
-- Keep coupled content in sync. Removing an event means updating the events
-  list, the hardcoded event numbers after it, the spelled-out count in the
-  eyebrow ("Four Official Events"), the schedule list and its numbering, and
-  any callout referencing that event. CLAUDE.md spells this out.
-- You cannot build or preview. Be conservative with HTML and Nunjucks syntax —
-  a malformed template fails the build and nothing deploys.
+- Event numbering, the spelled-out event count, schedule numbering, and each
+  event's schedule entry are all derived from the events array. Removing an
+  event means deleting one object from that array — do not also hand-edit the
+  page to match, and never reintroduce a hardcoded count or number.
+- Data values are plain text, never HTML. Templates supply the markup and
+  Nunjucks escapes what it interpolates, so tags placed in the JSON render as
+  visible text.
+- You cannot build or preview. JSON must stay valid — a trailing comma or an
+  unclosed brace fails the build and nothing deploys.
 - One commit per request, with a message describing the intent.
 - Don't touch eleventy.config.js, .github/workflows/, package.json, or
   package-lock.json unless explicitly asked.
@@ -152,19 +157,22 @@ olympics.dad reflects it. Once that round trip works, the setup is done.
 For anything structural — a new page type, restyling a section, changing the
 build — use Claude Code instead. It can build and preview.
 
-## Recommended: move the events into a data file
+## Why the content lives in JSON
 
-The one change that would make *"remove the fourth event"* genuinely reliable.
+The site's content sits in `src/_data/2026.json` specifically so this workflow
+is safe.
 
-Right now that request requires five coordinated edits across two lists with
-hardcoded numbering, plus a spelled-out count and a callout that references
-the event by name. Every one is a chance for a blind editor to leave the page
-inconsistent — and nothing in the build will catch it.
+*"Remove the fourth event"* used to mean five coordinated edits: the event's
+markup, the hardcoded `01`/`02` numbering on everything after it, the count
+spelled out in prose as "Four Official Events", the separate schedule list
+with its own numbering, and a callout that referenced the event by name. Every
+one was a chance for an editor working without a preview to leave the page
+contradicting itself, and nothing in the build would have caught it.
 
-Moving the events into `src/_data/events.json` and looping over them in the
-template collapses that to a single, safe edit: delete one object from an
-array. Numbering, the count, and the schedule all derive from the data.
+Now it's one deletion from the `events` array. The numbering, the count, the
+schedule, and the callout all follow. That's the difference between a site you
+*can* edit from your phone and one you can edit from your phone without
+checking the result on a laptop afterward.
 
-The same applies to the schedule and the what-to-bring checklist. This is the
-difference between a site you *can* edit from your phone and one you can edit
-from your phone *without checking the result on a laptop afterward*.
+The general rule when extending the site: if a change would require editing
+the same fact in two places, put the fact in the data file and derive both.

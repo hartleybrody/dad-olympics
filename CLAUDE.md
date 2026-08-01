@@ -1,9 +1,8 @@
 # Dad Olympics — repo guide
 
-The website for the 2026 Dad Olympics, live at **https://olympics.dad**.
+The website for the Dad Olympics, live at **https://olympics.dad**.
 
-Read this before making changes. It covers where content lives and which
-pieces of content have to move together.
+Read this before making changes.
 
 ## How publishing works
 
@@ -16,52 +15,64 @@ version.
 
 ## Where things live
 
+**Almost every content change is an edit to `src/_data/2026.json`.** The page
+template holds structure and section headings; the data file holds the words.
+
 | Path | What it is |
 | --- | --- |
-| `src/index.md` | The entire homepage. HTML inside a Markdown file, using Nunjucks `{{ }}` variables. |
-| `src/_data/site.json` | Date, time, place, registration URL, title, year. Edit these here — they're referenced throughout the templates. |
+| `src/_data/2026.json` | All content for the 2026 games: events, schedule, invitation, date, time, place, registration URL, what to bring. |
+| `src/_data/games.js` | Chooses which year's file the site renders. One constant, `YEAR`. |
+| `src/_data/site.json` | Site-wide only — currently just the title. Anything year-specific belongs in the year file. |
+| `src/index.md` | Page structure. Loops over `games.*`; contains section headings and little else. |
 | `src/_includes/base.njk` | Page shell: `<head>`, fonts, header/footer includes. |
 | `src/_includes/header.njk` | Site header and nav. |
 | `src/_includes/footer.njk` | Site footer. |
 | `src/css/style.css` | All styles. Design tokens are the CSS custom properties in `:root`. |
 | `marketing/branding.md` | Brand guidelines — palette, typography, voice. Follow it for new copy and design. |
-| `eleventy.config.js` | Build config. Rarely needs changing. |
+| `eleventy.config.js` | Build config and two template filters. |
 | `.github/workflows/deploy.yml` | The deploy pipeline. |
 
-## Coupled content — keep these in sync
+The data file is exposed to templates as **`games`**, not `2026` — a Nunjucks
+identifier can't start with a digit, so `{{ 2026.year }}` is a parse error.
+`games.js` re-exports the JSON under a usable name.
 
-`src/index.md` repeats the same information in several places. Changing one
-without the others leaves the page self-contradicting. The build won't catch
-this; nothing validates it.
+## What derives automatically
 
-**If you add or remove an event:**
+These used to be hand-maintained in the markup and are now computed. Don't
+reintroduce hardcoded copies:
 
-1. The `<li class="event">` block in `<ol class="events">`
-2. The `<span class="event-num">` numbers on the events that follow it —
-   they're hardcoded (`01`, `02`, …), not generated
-3. The eyebrow above the list — it spells the count in words:
-   `<p class="eyebrow">Four Official Events</p>`
-4. The matching `<li>` in `<ol class="schedule">`, **and** the `<span
-   class="ord">` numbers on every entry after it — also hardcoded, and offset
-   from the event numbers because the schedule includes registration and the
-   ceremonies
-5. Any `.notice` callout that references that event by name. The Point Chase
-   notice is entirely about the Entire Family Carry — if that event goes, the
-   notice goes.
+- **Event numbers** (`01`, `02`, …) — from list position, via the `pad2` filter
+- **"Four Official Events"** — from `events.length`, via the `numberWord`
+  filter, which spells the count
+- **Schedule numbering** — continuous across `schedule.before`, the events,
+  and `schedule.after`, so inserting an event renumbers everything after it
+- **Schedule entries for events** — each event's `summary` field supplies its
+  schedule line; the card uses `description`
+- **The Point Chase callout** — it's a `notice` on the Entire Family Carry
+  event, so deleting that event deletes the callout with it
+- **The displayed year** — `games.year`, a fixed string, *not* the real-world
+  current date. The hero, footer, and copyright all show the year of the games
+  currently on display.
 
-**If you change the date, time, place, or registration URL:** edit
-`src/_data/site.json` only. It feeds the hero, the footer, and the register
-buttons.
+So removing an event means deleting one object from the `events` array.
+Nothing else needs touching.
 
-**If you rename a section:** the header nav links to `#events`, `#schedule`,
-and `#what-to-bring`. Keep the `id` attributes and the nav in agreement.
+## Adding a year
+
+Copy `2026.json` to `2027.json`, edit it, and change `YEAR` in `games.js`. The
+old file stays in the repo as a record of that year's games.
 
 ## Conventions
 
-- Content is hand-written HTML, not Markdown syntax, so it can carry the
-  brand's class names. Keep the existing class vocabulary (`section`, `wrap`,
-  `eyebrow`, `lede`, `notice`, `event`, `btn`) rather than inventing new ones.
-- Never hardcode a value that already exists in `site.json`.
+- The page is hand-written HTML rather than Markdown syntax, so it can carry
+  the brand's class names. Keep the existing class vocabulary (`section`,
+  `wrap`, `eyebrow`, `lede`, `notice`, `event`, `btn`) rather than inventing
+  new ones.
+- Data values are plain text, never HTML — templates handle the markup, and
+  Nunjucks escapes what it interpolates. A notice is `{title, body}` so the
+  bold run stays in the template. Don't put tags in the JSON; they'll render
+  as visible text.
+- Never hardcode a value that already exists in the year file.
 - The `.misprint` off-register effect is used **once**, on the hero wordmark.
   Don't apply it elsewhere — `marketing/branding.md` explains why.
 - Copy follows the voice section of `marketing/branding.md`: dry, ceremonial

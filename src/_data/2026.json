@@ -1,0 +1,75 @@
+{
+  "year": "2026",
+  "date": "Sunday, May 17",
+  "time": "9:30–12:00",
+  "place": "Shaker Heights",
+  "registerUrl": "https://forms.gle/KV5KtiPR5BJsvwXw7",
+  "tagline": "Feats of strength. Family‑sized.",
+  "description": "Feats of strength. Family-sized. Sunday, May 17, 2026 in Shaker Heights.",
+
+  "invitation": {
+    "lede": "One mile with a stroller, three hundred yards carrying a scooter, and the return of the overhead press. New this year: the entire family carry.",
+    "paragraphs": [
+      "This year's events are meant to include the whole family, and dads with younger and older kids are welcome. The goal is a family-friendly competition that gives our kids a chance at fitness, feats of strength, and good sportsmanship — win or lose.",
+      "Register below so The Committee has your contact information for day-of logistics and enough race bibs for everyone."
+    ]
+  },
+
+  "events": [
+    {
+      "name": "The Mile",
+      "description": "Race with your oldest child in a stroller, wagon, or whatever they can safely ride on. Roughly 1.2 miles on quiet neighborhood roads. Keep them safe and close.",
+      "summary": "Rochester, Shelburne, Rocklyn, Stanford."
+    },
+    {
+      "name": "Run & Carry",
+      "description": "About 300 yards, out and back. On the way out your child rides, pedals, or drives the vehicle of their choice. On the way back, dad carries the vehicle. The child may run back or be carried.",
+      "summary": "Out and back, roughly 300 yards."
+    },
+    {
+      "name": "Overhead Press & Hold",
+      "description": "Press your oldest child overhead with one or two hands and keep them above shoulder height, with no resting on your head or shoulder. Everyone starts together. Last child aloft wins.",
+      "summary": "Head to head. Last child aloft wins."
+    },
+    {
+      "name": "Entire Family Carry",
+      "description": "Carry all of your children at once for a quick out-and-back across the lawn. You may set them down to adjust, but you cannot move unless everyone is off the ground.",
+      "summary": "Heats by number of children.",
+      "notice": {
+        "title": "The Point Chase.",
+        "body": "The family carry runs in heats by number of children. Dads with more kids automatically place higher. This is not favoritism. It is arithmetic."
+      }
+    }
+  ],
+
+  "schedule": {
+    "before": [
+      {
+        "name": "Registration & Check-In",
+        "note": "Bib numbers assigned, teams registered."
+      },
+      {
+        "name": "Opening Ceremony",
+        "note": "Announcements, disclaimers, and the lighting of the torch."
+      }
+    ],
+    "after": [
+      {
+        "name": "Closing Ceremony",
+        "note": "Top five point scorers announced. Gold, silver, and bronze to the top three dads and children."
+      }
+    ]
+  },
+
+  "whatToBring": {
+    "items": [
+      "Water and snacks, for parents and kids both.",
+      "A folding camp chair or a blanket.",
+      "An age-appropriate vehicle for your child. A jogging stroller works for The Mile; bring something smaller and lighter for Run & Carry."
+    ],
+    "notice": {
+      "title": "Before you leave the house:",
+      "body": "check the tire pressure and test the brakes on anything with wheels. Children ride only on equipment rated for them, and stay close to their dad for the whole course."
+    }
+  }
+}
