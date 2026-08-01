@@ -34,11 +34,7 @@
     {
       "name": "Entire Family Carry",
       "description": "Carry all of your children at once for a quick out-and-back across the lawn. You may set them down to adjust, but you cannot move unless everyone is off the ground.",
-      "summary": "Heats by number of children.",
-      "notice": {
-        "title": "The Point Chase.",
-        "body": "The family carry runs in heats by number of children. Dads with more kids automatically place higher. This is not favoritism. It is arithmetic."
-      }
+      "summary": "Heats by number of children."
     }
   ],
 
