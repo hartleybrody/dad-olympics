@@ -117,6 +117,12 @@ Don't skip this: `.dad` is one of Google's HSTS-preloaded TLDs, so browsers
 refuse to load it over plain HTTP no matter what. The site is unreachable until
 the certificate is live.
 
+### Editing from the Claude app
+
+The site can also be updated from Claude on a phone or desktop — describe a
+change in chat, and it commits to `main` and deploys itself. Setup is in
+[`docs/claude-project-setup.md`](docs/claude-project-setup.md).
+
 ### Notes and gotchas
 
 - **Leaving Cloudflare's proxy off is fine.** You lose Cloudflare's CDN, but
