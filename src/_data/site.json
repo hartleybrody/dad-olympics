@@ -1,4 +1,9 @@
 {
   "title": "Dad Olympics",
-  "description": "A minimal Eleventy site."
+  "description": "Feats of strength. Family-sized. Sunday, May 17, 2026 in Shaker Heights.",
+  "year": "2026",
+  "date": "Sunday, May 17",
+  "time": "9:30–12:00",
+  "place": "Shaker Heights",
+  "registerUrl": "https://forms.gle/KV5KtiPR5BJsvwXw7"
 }

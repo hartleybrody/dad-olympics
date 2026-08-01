@@ -79,6 +79,7 @@ layout, at small scale — a stripe, a badge, a highlight. Never two at once.
   --teal:      #7FA2A6;
   --teal-dark: #5E8286;  /* shadows, borders, hover */
   --brick:     #BF4A34;
+  --brick-dark:#A83E2B;  /* cream type on brick — clears AA at body size */
   --cream:     #F2E7CB;
   --cream-lt:  #FBF5E6;  /* cards on cream */
   --ink:       #33261C;
@@ -92,10 +93,15 @@ layout, at small scale — a stripe, a badge, a highlight. Never two at once.
 ### Pairing rules
 
 - **Cream + Ink** is the default for anything with real reading in it (schedule, rules,
-  the FAQ). It passes contrast comfortably.
-- **Teal + Cream** is the hero combination. Cream type on teal must be large and bold —
-  it's roughly 3:1, so headline-only. For body copy on teal, use Ink.
-- **Brick on Teal** is for shapes, not text. Brick type on cream is fine at 18px+ bold.
+  the FAQ). 11.8:1 — comfortable everywhere.
+- **Ink on Teal** is the rule for *all functional text* on a teal panel — 5.0:1, passes AA
+  at any size. Schedule text, captions, quotes, buttons on teal.
+- **Cream on Teal** is the poster's signature look but measures only **2.25:1**. It is
+  reserved for the wordmark itself, which is a logotype and exempt. Do not set readable
+  copy in cream on Field Teal — reach for Ink instead.
+- **Brick on Teal** is for shapes, not text. Cream on Brick is 4.0:1 — fine for large bold
+  UI like the year badge; use **Brick Dark `#A83E2B`** (5.0:1) anywhere cream type needs to
+  pass AA at body size, e.g. buttons.
 - Never put Brick next to Bubblegum. Never tint the cream toward gray — it should always
   read warm, like aged newsprint.
 
