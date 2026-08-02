@@ -1,9 +1,15 @@
 <header class="site-header wrap">
   <a class="site-title" href="/">{{ site.title }}</a>
   <nav>
+    {%- if games.sections.events %}
     <a href="#events">Events</a>
+    {%- endif %}
+    {%- if games.sections.schedule %}
     <a href="#schedule">Schedule</a>
+    {%- endif %}
+    {%- if games.sections.whatToBring %}
     <a href="#what-to-bring">What to Bring</a>
+    {%- endif %}
     <a href="{{ games.registerUrl }}">Register</a>
   </nav>
 </header>

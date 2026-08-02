@@ -1,0 +1,140 @@
+{#
+  The whole event page, rendered from whichever year is in `games`.
+
+  Two templates include this and nothing else: index.md, where `games` is the
+  current year, and years.njk, where it's each archived year in turn. Keeping
+  one copy is the point — an archived year should look exactly like the front
+  page did, not like a version of it that stopped being maintained.
+#}
+{% set beforeCount = games.schedule.before | length %}
+{% set eventCount = games.events | length %}
+
+<section class="hero wrap">
+  <div class="hero-body">
+    <span class="hero-year">{{ games.startsAt | year }}</span>
+    <h1 class="hero-title">
+      <span class="misprint" data-text="Dad">Dad</span>
+      <span class="misprint" data-text="Olympics">Olympics</span>
+    </h1>
+    <p class="hero-tagline">{{ games.tagline }}</p>
+    <p class="hero-meta">
+      <span>{{ games.startsAt | longDate }}</span><span>{{ games.startsAt | clock }}–{{ games.endsAt | clock }}</span><span>{{ games.place }}</span>
+    </p>
+    <a class="btn btn-primary" href="{{ games.registerUrl }}">Claim your bib</a>
+  </div>
+  <img class="hero-mascot" src="/img/barbell-mascot-680.webp"
+    srcset="/img/barbell-mascot-340.webp 340w, /img/barbell-mascot-680.webp 680w"
+    sizes="19rem" width="680" height="967" decoding="async"
+    alt="A grinning dad pressing a barbell overhead with one arm and holding a stuffed rabbit in the other." />
+</section>
+
+{% if games.sections.invitation %}
+<section class="section wrap">
+  <p class="eyebrow">The Invitation</p>
+  <h2>You are cordially invited</h2>
+  {%- if games.invitation.lede %}
+  <p class="lede">{{ games.invitation.lede }}</p>
+  {%- endif %}
+  {%- for paragraph in games.invitation.paragraphs %}
+  <p>{{ paragraph }}</p>
+  {%- endfor %}
+</section>
+{% endif %}
+
+{% if games.sections.events %}
+<section class="section wrap" id="events">
+  <p class="eyebrow">{{ eventCount | numberWord }} Official Events</p>
+  <h2>The Games</h2>
+  <ol class="events">
+    {%- for event in games.events %}
+    <li class="event">
+      <span class="event-num">{{ loop.index | pad2 }}</span>
+      <h3>{{ event.name }}</h3>
+      <p>{{ event.description }}</p>
+    </li>
+    {%- endfor %}
+  </ol>
+  {%- for event in games.events %}
+  {%- if event.notice %}
+  <div class="notice">
+    <p><strong>{{ event.notice.title }}</strong> {{ event.notice.body }}</p>
+  </div>
+  {%- endif %}
+  {%- endfor %}
+</section>
+{% endif %}
+
+{% if games.sections.schedule %}
+<section class="section wrap" id="schedule">
+  <p class="eyebrow">About Two Hours, Start to Finish</p>
+  <h2>Order of the Day</h2>
+  <ol class="schedule">
+    {%- for item in games.schedule.before %}
+    <li>
+      <span class="ord">{{ loop.index }}</span>
+      <span class="name">{{ item.name }}</span>
+      <span class="note">{{ item.note }}</span>
+    </li>
+    {%- endfor %}
+    {%- for event in games.events %}
+    <li>
+      <span class="ord">{{ loop.index + beforeCount }}</span>
+      <span class="name">{{ event.name }}</span>
+      <span class="note">{{ event.summary }}</span>
+    </li>
+    {%- endfor %}
+    {%- for item in games.schedule.after %}
+    <li>
+      <span class="ord">{{ loop.index + beforeCount + eventCount }}</span>
+      <span class="name">{{ item.name }}</span>
+      <span class="note">{{ item.note }}</span>
+    </li>
+    {%- endfor %}
+  </ol>
+  <p class="fine">
+    There will be 10–15 minutes between events while points are tallied, cones are moved, mothers
+    are consulted, and somebody's kid is located.
+  </p>
+</section>
+{% endif %}
+
+{% if games.sections.whatToBring %}
+<section class="section wrap" id="what-to-bring">
+  <p class="eyebrow">Come Prepared</p>
+  <h2>What to Bring</h2>
+  {%- if games.whatToBring.items | length %}
+  <ul class="checklist">
+    {%- for item in games.whatToBring.items %}
+    <li>{{ item }}</li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+  {%- if games.whatToBring.notice %}
+  <div class="notice">
+    <p><strong>{{ games.whatToBring.notice.title }}</strong> {{ games.whatToBring.notice.body }}</p>
+  </div>
+  {%- endif %}
+</section>
+{% endif %}
+
+<section class="section wrap">
+  <div class="rule-quote">
+    <blockquote>No hardos.</blockquote>
+    <cite>The Committee &middot; Rule One</cite>
+  </div>
+</section>
+
+<section class="cta wrap">
+  <h2>See you on the lawn</h2>
+  <p>
+    Fill out the form so we know you're coming. More details to follow as the day gets closer.
+  </p>
+  <p><a class="btn btn-primary" href="{{ games.registerUrl }}">Register your family</a></p>
+</section>
+
+<div class="mascot-band">
+  <img src="/img/barbell-mascot-340.webp"
+    srcset="/img/barbell-mascot-340.webp 340w, /img/barbell-mascot-680.webp 680w"
+    sizes="13rem" width="680" height="967" decoding="async" loading="lazy"
+    alt="A grinning dad pressing a barbell overhead with one arm and holding a stuffed rabbit in the other." />
+</div>
