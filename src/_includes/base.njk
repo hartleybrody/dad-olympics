@@ -4,7 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% if title %}{{ title }} &middot; {% endif %}{{ site.title }}</title>
-    <meta name="description" content="{{ description or games.description }}" />
+    {#- Built from the year's own data rather than written out beside it, so a
+        change of date or venue can't leave a stale copy behind in a field
+        nobody looks at. This meta tag is the only place it's used.
+
+        Concatenated rather than captured with a {% set %} block: a capture
+        escapes its contents, and printing that would escape them a second
+        time, turning the tagline's ampersand into &amp;amp;. #}
+    {%- set gamesSummary = games.tagline ~ " " ~ (games.startsAt | longDate) ~ ", " ~ (games.startsAt | year) ~ " in " ~ games.place ~ "." %}
+    <meta name="description" content="{{ description or gamesSummary }}" />
     {%- if games.isCurrent and page.url != "/" %}
     {# /y/<current year>/ is the same page as "/", so point search engines at "/". #}
     <link rel="canonical" href="/" />
