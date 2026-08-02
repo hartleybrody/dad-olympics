@@ -333,7 +333,7 @@ a:hover {
   color: var(--cream);
 }
 
-.btn:hover {
+.btn:not([aria-disabled="true"]):hover {
   transform: translateY(-2px);
 }
 
@@ -383,6 +383,9 @@ a:hover {
   border-radius: calc(var(--radius) - 6px);
   pointer-events: none;
 }
+  /* <button> doesn't inherit the page font the way <a> does, and the register
+     button becomes one while there's no form to point at. */
+  font-family: inherit;
 
 .event-num {
   display: block;
@@ -394,6 +397,7 @@ a:hover {
 }
 
 .event h3 {
+  cursor: pointer;
   margin-block: 0.35rem 0.4rem;
 }
 
@@ -410,6 +414,51 @@ a:hover {
   border: var(--keyline) solid var(--ink);
   border-radius: var(--radius);
   overflow: hidden;
+}
+
+/* ---------- Button, waiting on a sign-up form ---------- */
+
+/* Outlined rather than dimmed with opacity: the text has to stay legible on
+   both the teal hero and the cream section behind the closing call to action,
+   and a translucent label on either would not. */
+.btn[aria-disabled="true"] {
+  position: relative;
+  background: transparent;
+  border-color: rgba(51, 38, 28, 0.4);
+  color: rgba(51, 38, 28, 0.72);
+  cursor: not-allowed;
+}
+
+.btn[aria-disabled="true"]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 0.55rem);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 0.5em 0.85em;
+  border-radius: 10px;
+  opacity: 0;
+  /* visibility, not opacity alone, so it can't be hit-tested while hidden */
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Focus as well as hover, or the explanation is mouse-only. */
+.btn[aria-disabled="true"]:hover::after,
+.btn[aria-disabled="true"]:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn[aria-disabled="true"]::after {
+    transition: opacity 0.12s ease;
+  }
 }
 
 .schedule li {

@@ -6,6 +6,26 @@
   one copy is the point — an archived year should look exactly like the front
   page did, not like a version of it that stopped being maintained.
 #}
+{#
+  A year gets its sign-up form some time after it gets a date, so the button
+  has to work before there's anywhere to send people. Until then it stays put
+  and says why, rather than vanishing and changing the shape of the page.
+
+  aria-disabled rather than the disabled attribute: a disabled button can't be
+  focused, and browsers suppress mouse events on it, so neither hover nor
+  keyboard focus would ever reveal the reason it's inert.
+
+  The url is passed in rather than read from `games` inside the macro, since
+  Nunjucks macros don't reliably see the enclosing template's context.
+#}
+{% macro registerButton(url, label) -%}
+{%- if url -%}
+<a class="btn btn-primary" href="{{ url }}">{{ label }}</a>
+{%- else -%}
+<button type="button" class="btn btn-primary" aria-disabled="true" data-tooltip="Coming soon" aria-label="{{ label }} — coming soon">{{ label }}</button>
+{%- endif -%}
+{%- endmacro %}
+
 {% set beforeCount = games.schedule.before | length %}
 {% set eventCount = games.events | length %}
 
@@ -20,7 +40,7 @@
     <p class="hero-meta">
       <span>{{ games.startsAt | longDate }}</span><span>{{ games.startsAt | clock }}–{{ games.endsAt | clock }}</span><span>{{ games.place }}</span>
     </p>
-    <a class="btn btn-primary" href="{{ games.registerUrl }}">Claim your bib</a>
+    {{ registerButton(games.registerUrl, "Claim your bib") }}
   </div>
   <img class="hero-mascot" src="/img/barbell-mascot-680.webp"
     srcset="/img/barbell-mascot-340.webp 340w, /img/barbell-mascot-680.webp 680w"
@@ -129,7 +149,7 @@
   <p>
     Fill out the form so we know you're coming. More details to follow as the day gets closer.
   </p>
-  <p><a class="btn btn-primary" href="{{ games.registerUrl }}">Register your family</a></p>
+  <p>{{ registerButton(games.registerUrl, "Register your family") }}</p>
 </section>
 
 <div class="mascot-band">
