@@ -7,14 +7,14 @@ layout: base.njk
 
 <section class="hero wrap">
   <div class="hero-body">
-    <span class="hero-year">{{ games.year }}</span>
+    <span class="hero-year">{{ games.startsAt | year }}</span>
     <h1 class="hero-title">
       <span class="misprint" data-text="Dad">Dad</span>
       <span class="misprint" data-text="Olympics">Olympics</span>
     </h1>
     <p class="hero-tagline">{{ games.tagline }}</p>
     <p class="hero-meta">
-      <span>{{ games.date }}</span><span>{{ games.time }}</span><span>{{ games.place }}</span>
+      <span>{{ games.startsAt | longDate }}</span><span>{{ games.startsAt | clock }}–{{ games.endsAt | clock }}</span><span>{{ games.place }}</span>
     </p>
     <a class="btn btn-primary" href="{{ games.registerUrl }}">Claim your bib</a>
   </div>
