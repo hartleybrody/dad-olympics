@@ -84,8 +84,14 @@ Almost every content change is an edit to src/_data/2026.json. It holds the
 events, the schedule, the invitation copy, the date, and the registration URL.
 Prefer editing it over editing the page.
 - src/_data/2026.json — all content for the 2026 games
-- src/index.md — page structure. Loops over the data; holds section headings
-  and little else. Edit only for structural changes.
+- src/_includes/games-page.njk — page structure. Loops over the data; holds
+  section headings and little else. Edit only for structural changes.
+
+Each year has its own file, and each is published at /y/<year>/ as well as
+being what "/" shows while it is the current year. Editing 2026.json therefore
+changes both the front page and /y/2026/. That is correct while 2026 is
+current; once it isn't, editing that file rewrites what an archived year says.
+Check which year is current in lib/years.js before editing a past one.
 - src/_includes/ — base.njk (page shell), header.njk, footer.njk
 - src/css/style.css — all styles
 - marketing/branding.md — palette, typography, voice. Follow it for any new

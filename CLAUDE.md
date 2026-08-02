@@ -21,9 +21,13 @@ template holds structure and section headings; the data file holds the words.
 | Path | What it is |
 | --- | --- |
 | `src/_data/2026.json` | All content for the 2026 games: events, schedule, invitation, date, time, place, registration URL, what to bring. |
-| `src/_data/games.js` | Chooses which year's file the site renders. One constant, `YEAR`. |
+| `src/_data/currentYear.js` | The year shown on `/`, as a one-item list. |
+| `src/_data/years.js` | Every year, driving the archive pages. |
+| `lib/years.js` | Loads the year files. Holds `CURRENT_YEAR`, the one constant that decides what `/` shows. |
 | `src/_data/site.json` | Site-wide only — currently just the title. Anything year-specific belongs in the year file. |
-| `src/index.md` | Page structure. Loops over `games.*`; contains section headings and little else. |
+| `src/_includes/games-page.njk` | The event page itself. Loops over `games.*`; contains section headings and little else. |
+| `src/index.md` | `/` — includes the page above with the current year. |
+| `src/years.njk` | `/y/<year>/` — includes the same page once per archived year. |
 | `src/_includes/base.njk` | Page shell: `<head>`, fonts, header/footer includes. |
 | `src/_includes/header.njk` | Site header and nav. |
 | `src/_includes/footer.njk` | Site footer. |
@@ -31,12 +35,12 @@ template holds structure and section headings; the data file holds the words.
 | `src/img/` | Web-ready images, copied through as-is and served from `/img/…`. |
 | `marketing/branding.md` | Brand guidelines — palette, typography, voice. Follow it for new copy and design. |
 | `marketing/barbell-mascot.png` | Full-resolution mascot source. Kept for regenerating the web versions; never published. |
-| `eleventy.config.js` | Build config and two template filters. |
+| `eleventy.config.js` | Build config, date formatting, and the template filters. |
 | `.github/workflows/deploy.yml` | The deploy pipeline. |
 
-The data file is exposed to templates as **`games`**, not `2026` — a Nunjucks
+A year's data reaches templates as **`games`**, never as `2026` — a Nunjucks
 identifier can't start with a digit, so `{{ 2026.year }}` is a parse error.
-`games.js` re-exports the JSON under a usable name.
+Each page's pagination alias supplies it.
 
 ## What derives automatically
 
@@ -59,10 +63,41 @@ reintroduce hardcoded copies:
 So removing an event means deleting one object from the `events` array.
 Nothing else needs touching.
 
-## Adding a year
+## Years and the archive
 
-Copy `2026.json` to `2027.json`, edit it, and change `YEAR` in `games.js`. The
-old file stays in the repo as a record of that year's games.
+Each year is one file, `src/_data/<year>.json`, and the **filename is the
+year** — nothing inside the JSON has to agree with it, and the archive URL is
+built from it.
+
+Every year gets a permanent page at `/y/<year>/`, alongside `/` which shows
+whichever year `CURRENT_YEAR` names. Both render the same template with
+different data, so an archived year looks exactly like the front page did
+rather than a version of it that stopped being maintained.
+
+**Adding a year:** add `src/_data/2027.json`, then change `CURRENT_YEAR` in
+`lib/years.js`. That's the whole rollover. 2026 keeps `/y/2026/` unchanged.
+
+Two rules worth knowing:
+
+- **Every year file publishes, however little is in it.** A file holding just
+  a date gets a page. `sectionsWithContent` in `lib/years.js` decides which
+  sections have enough content to render, and the header nav asks the same
+  question, so a section that isn't on the page never gets a nav link.
+- **Editing a past year's file rewrites history.** Once `CURRENT_YEAR` has
+  moved on, `src/_data/2026.json` is the only thing behind `/y/2026/`. Change
+  it and you've changed what that year's page says happened.
+
+**`games` is only ever set by a pagination alias**, never as global data.
+Eleventy deep-merges the data cascade, so a global `games` would sit
+*underneath* each archive page's year: any field a partly-filled year hadn't
+set would silently inherit the current year's value, and a new year's page
+would advertise last year's venue and sign-up form. That's why the front page
+paginates over a one-item list (`src/_data/currentYear.js`) instead of just
+reading a global.
+
+While a year is current, `/` and `/y/<year>/` are the same page, so the
+archive copy carries `<link rel="canonical" href="/">`. That tag disappears on
+its own once the year stops being current.
 
 ## Images
 

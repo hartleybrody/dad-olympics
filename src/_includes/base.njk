@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% if title %}{{ title }} &middot; {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ description or games.description }}" />
+    {%- if games.isCurrent and page.url != "/" %}
+    {# /y/<current year>/ is the same page as "/", so point search engines at "/". #}
+    <link rel="canonical" href="/" />
+    {%- endif %}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

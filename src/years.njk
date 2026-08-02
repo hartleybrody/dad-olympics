@@ -1,0 +1,11 @@
+---
+layout: base.njk
+pagination:
+  data: years
+  size: 1
+  alias: games
+permalink: "/y/{{ games.slug }}/"
+eleventyComputed:
+  title: "{{ games.slug }}"
+---
+{% include "games-page.njk" %}
