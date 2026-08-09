@@ -1,19 +1,6 @@
 <header class="site-header wrap">
   <a class="site-title" href="/">{{ site.title }}</a>
   <nav>
-    {%- if games.sections.events %}
-    <a href="#events">Events</a>
-    {%- endif %}
-    {%- if games.sections.schedule %}
-    <a href="#schedule">Schedule</a>
-    {%- endif %}
-    {%- if games.sections.whatToBring %}
-    <a href="#what-to-bring">What to Bring</a>
-    {%- endif %}
-    {#- No form yet means nowhere to send anyone, and a nav link has no room
-        to explain itself the way the buttons do. #}
-    {%- if games.registerUrl %}
     <a href="{{ games.registerUrl }}">Register</a>
-    {%- endif %}
   </nav>
 </header>
