@@ -33,5 +33,10 @@
     </main>
 
     {% include "footer.njk" %}
+
+    {#- The countdown band is the only thing on the site that needs a script.
+        It's deferred and shipped site-wide: a page without a countdown finds
+        no element to drive and does nothing. #}
+    <script src="/js/countdown.js" defer></script>
   </body>
 </html>

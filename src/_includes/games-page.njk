@@ -48,6 +48,35 @@
     alt="A grinning dad pressing a barbell overhead with one arm and holding a stuffed rabbit in the other." />
 </section>
 
+{#
+  The countdown to the start of the games.
+
+  It ships hidden and the script reveals it, rather than the build deciding
+  whether the date is still ahead. The site is static and only rebuilds on a
+  commit, so build time says nothing about when someone is actually looking at
+  the page — a build-time check would leave last spring's page counting down
+  to a day that has already happened. Whether the games are in the past is a
+  question only the visitor's clock can answer, so the visitor's clock is the
+  one place it's asked.
+
+  Hidden by default also means visitors without JavaScript see nothing here
+  instead of a frozen row of zeros.
+
+  The digits are aria-hidden and a plain-language summary carries the same
+  information for screen readers: four numbers changing every second is noise
+  read aloud, and no live region is used so it isn't re-announced on tick.
+#}
+<section class="countdown wrap" data-countdown="{{ games.startsAt }}" aria-label="Time remaining until the games" hidden>
+  <p class="eyebrow">Until the Torch is Lit</p>
+  <ol class="countdown-clock" aria-hidden="true">
+    <li><span class="countdown-num" data-unit="days">00</span><span class="countdown-label">Days</span></li>
+    <li><span class="countdown-num" data-unit="hours">00</span><span class="countdown-label">Hours</span></li>
+    <li><span class="countdown-num" data-unit="minutes">00</span><span class="countdown-label">Minutes</span></li>
+    <li><span class="countdown-num" data-unit="seconds">00</span><span class="countdown-label">Seconds</span></li>
+  </ol>
+  <p class="countdown-summary" data-countdown-summary></p>
+</section>
+
 {% if games.sections.invitation %}
 <section class="section wrap">
   <p class="eyebrow">The Invitation</p>

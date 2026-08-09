@@ -32,6 +32,7 @@ template holds structure and section headings; the data file holds the words.
 | `src/_includes/header.njk` | Site header and nav. |
 | `src/_includes/footer.njk` | Site footer. |
 | `src/css/style.css` | All styles. Design tokens are the CSS custom properties in `:root`. |
+| `src/js/countdown.js` | The only script on the site. Drives the countdown band under the hero. |
 | `src/img/` | Web-ready images, copied through as-is and served from `/img/…`. |
 | `marketing/branding.md` | Brand guidelines — palette, typography, voice. Follow it for new copy and design. |
 | `marketing/barbell-mascot.png` | Full-resolution mascot source. Kept for regenerating the web versions; never published. |
@@ -63,6 +64,27 @@ reintroduce hardcoded copies:
 So removing an event means deleting one object from the `events` array.
 Nothing else needs touching.
 
+## The countdown
+
+The band under the hero counts down to `startsAt` and disappears once that
+moment has passed. It is the one thing on the site the build does not decide.
+
+The markup always renders, carrying the timestamp in `data-countdown` and the
+`hidden` attribute; `src/js/countdown.js` reveals it only while the date is
+still ahead. That's deliberate — the site is static and rebuilds only on a
+commit, so a build-time check would leave a page counting down to a day that
+has already happened. Whether the games are over is a question only the
+visitor's clock can answer.
+
+Two consequences worth knowing:
+
+- **No JavaScript means no countdown**, rather than a frozen row of zeros.
+  Everything that matters — date, time, place — is in the hero above it.
+- **Don't give `.countdown` a `display` in CSS.** The section relies on
+  `hidden`, and any display value overrides it, so the band would flash on
+  every page load and never hide for a past year. The grid is on the list
+  inside it.
+
 ## Years and the archive
 
 Each year is one file, `src/_data/<year>.json`, and the **filename is the
@@ -83,6 +105,11 @@ Two rules worth knowing:
   a date gets a page. `sectionsWithContent` in `lib/years.js` decides which
   sections have enough content to render, and the header nav asks the same
   question, so a section that isn't on the page never gets a nav link.
+- **No `registerUrl` yet turns the sign-up buttons inert.** Both render as
+  `<button aria-disabled="true">` with a "Coming soon" tooltip on hover or
+  focus, via the `registerButton` macro at the top of `games-page.njk`. The
+  nav's Register link is dropped entirely, having no room to explain itself.
+  Add the URL and all three become real links again.
 - **Editing a past year's file rewrites history.** Once `CURRENT_YEAR` has
   moved on, `src/_data/2026.json` is the only thing behind `/y/2026/`. Change
   it and you've changed what that year's page says happened.

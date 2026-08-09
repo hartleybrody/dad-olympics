@@ -310,10 +310,82 @@ a:hover {
   content: "";
 }
 
+/* ---------- Countdown ---------- */
+
+/* The band sits directly under the hero, so it's cream rather than teal —
+   two teal boxes stacked read as one box with a seam in it.
+
+   Nothing here sets `display` on the section itself: the element carries the
+   `hidden` attribute until the script has a real number to show, and any
+   display value would override it. The grid lives on the list inside. */
+.countdown {
+  margin-top: 1.75rem;
+}
+
+.countdown .eyebrow {
+  text-align: center;
+}
+
+.countdown-clock {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0.9rem 0;
+  list-style: none;
+  background: var(--cream-lt);
+  border: var(--keyline) solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.countdown-clock li {
+  text-align: center;
+  padding-inline: 0.25rem;
+}
+
+.countdown-clock li + li {
+  border-left: 1px solid rgba(94, 130, 134, 0.55);
+}
+
+.countdown-num {
+  display: block;
+  font-family: var(--font-display);
+  /* Tabular figures so the seconds column doesn't twitch on every tick. */
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(2.2rem, 10vw, 4.5rem);
+  line-height: 1;
+  color: var(--brick-dark);
+}
+
+.countdown-label {
+  display: block;
+  margin-top: 0.35rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: clamp(0.6rem, 2vw, 0.78rem);
+  color: var(--rootbeer);
+}
+
+/* The spoken version of the clock above. Present in the page for screen
+   readers; there's nothing in it a sighted reader can't already see. */
+.countdown-summary {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* ---------- Buttons ---------- */
 
 .btn {
   display: inline-block;
+  /* <button> doesn't inherit the page font the way <a> does, and the register
+     button becomes one while there's no form to point at. */
+  font-family: inherit;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -325,6 +397,7 @@ a:hover {
   background: var(--cream-lt);
   color: var(--ink);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .btn-primary {
@@ -340,6 +413,51 @@ a:hover {
 @media (prefers-reduced-motion: no-preference) {
   .btn {
     transition: transform 0.12s ease;
+  }
+}
+
+/* ---------- Button, waiting on a sign-up form ---------- */
+
+/* Outlined rather than dimmed with opacity: the text has to stay legible on
+   both the teal hero and the cream section behind the closing call to action,
+   and a translucent label on either would not. */
+.btn[aria-disabled="true"] {
+  position: relative;
+  background: transparent;
+  border-color: rgba(51, 38, 28, 0.4);
+  color: rgba(51, 38, 28, 0.72);
+  cursor: not-allowed;
+}
+
+.btn[aria-disabled="true"]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 0.55rem);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 0.5em 0.85em;
+  border-radius: 10px;
+  opacity: 0;
+  /* visibility, not opacity alone, so it can't be hit-tested while hidden */
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Focus as well as hover, or the explanation is mouse-only. */
+.btn[aria-disabled="true"]:hover::after,
+.btn[aria-disabled="true"]:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn[aria-disabled="true"]::after {
+    transition: opacity 0.12s ease;
   }
 }
 

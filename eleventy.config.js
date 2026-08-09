@@ -25,6 +25,7 @@ const formatDate = (value, options) =>
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/img");
+  eleventyConfig.addPassthroughCopy("src/js");
 
   // The year's JSON stores one ISO timestamp for the start of the games, and
   // the year, the date, and the clock time are all read back out of it.
