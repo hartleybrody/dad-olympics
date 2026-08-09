@@ -319,11 +319,32 @@ a:hover {
    `hidden` attribute until the script has a real number to show, and any
    display value would override it. The grid lives on the list inside. */
 .countdown {
-  margin-top: 1.75rem;
+  margin-top: 2.5rem;
+  /* Centered on the band below it. Everywhere else on the page a heading sits
+     over ranging text and is left-aligned with it; here it sits over four
+     evenly spaced numbers, and anything but centered reads as a mistake. */
+  text-align: center;
 }
 
-.countdown .eyebrow {
-  text-align: center;
+/* Bigger than the section headings further down — this is the loudest thing
+   on the page after the wordmark — but well short of it, so the hero still
+   wins. */
+.countdown-title {
+  font-size: clamp(2.3rem, 6.5vw, 3.75rem);
+  margin-bottom: 0.35rem;
+}
+
+/* The subtitle carries the eyebrow's treatment, moved underneath the title
+   where it belongs to it rather than announcing it. Sentence case: it's a
+   phrase completing the heading, not a label of its own. */
+.countdown-subtitle {
+  margin: 0 0 1.1rem;
+  max-width: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: clamp(0.78rem, 2.2vw, 0.95rem);
+  color: var(--rootbeer);
 }
 
 .countdown-clock {
