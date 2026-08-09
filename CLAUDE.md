@@ -55,8 +55,6 @@ reintroduce hardcoded copies:
   and `schedule.after`, so inserting an event renumbers everything after it
 - **Schedule entries for events** — each event's `summary` field supplies its
   schedule line; the card uses `description`
-- **The Point Chase callout** — it's a `notice` on the Entire Family Carry
-  event, so deleting that event deletes the callout with it
 - **The displayed year** — `games.year`, a fixed string, *not* the real-world
   current date. The hero, footer, and copyright all show the year of the games
   currently on display.
@@ -132,11 +130,6 @@ Anything in `src/img/` is published at `/img/…`. Sources stay in `marketing/`,
 which is not copied to the site, so full-resolution art never ships.
 
 Ship WebP at two widths and let `srcset` choose. The mascot was produced from
-- **No `registerUrl` yet turns the sign-up buttons inert.** Both render as
-  `<button aria-disabled="true">` with a "Coming soon" tooltip on hover or
-  focus, via the `registerButton` macro at the top of `games-page.njk`. The
-  nav's Register link is dropped entirely, having no room to explain itself.
-  Add the URL and all three become real links again.
 the source PNG with:
 
 ```sh
