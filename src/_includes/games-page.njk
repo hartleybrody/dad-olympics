@@ -60,16 +60,20 @@
   finishers are both "2nd," and there's no bronze that year. winner.tied is
   redundant with two entries sharing a place, but it's what drives the
   "Tied" label without the template having to detect duplicates itself.
+
+  placeWords keys are quoted strings — Nunjucks dict literals reject bare
+  numeric keys at compile time — and the lookup coerces winner.place to a
+  string with the `string` filter to match.
 #}
 {% if games.sections.winners %}
-{% set placeWords = {1: "1st", 2: "2nd", 3: "3rd"} %}
+{% set placeWords = {"1": "1st", "2": "2nd", "3": "3rd"} %}
 <section class="section wrap" id="winners">
   <p class="eyebrow">The Results Are In</p>
   <h2>The Podium</h2>
   <ol class="podium">
     {%- for winner in games.winners %}
     <li{% if winner.medal == "gold" %} class="podium-first"{% endif %}>
-      <span class="ord">{{ placeWords[winner.place] or winner.place }}</span>
+      <span class="ord">{{ placeWords[winner.place | string] or winner.place }}</span>
       <span class="name">{{ winner.name }}</span>
       <span class="note">{{ winner.medal | capitalize }}{% if winner.tied %} · Tied{% endif %}</span>
     </li>
