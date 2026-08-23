@@ -112,8 +112,20 @@
   <p class="countdown-summary" data-countdown-summary></p>
 </section>
 
+{#
+  The invitation disappears once the games have started — "you are cordially
+  invited" stops making sense to read after the fact. Keyed off the same
+  games.startsAt timestamp as the countdown above, and decided the same way:
+  by the visitor's clock, via data-hide-after, since a static build has no
+  way to know whether "now" is before or after that moment for whoever is
+  looking at the page. See src/js/countdown.js.
+
+  Unlike the countdown, this section ships visible. There's no equivalent of
+  "freeze at zero" to avoid here, so the JS-off fallback is just to leave it
+  showing — stale copy is harmless where a frozen countdown wasn't.
+#}
 {% if games.sections.invitation %}
-<section class="section wrap">
+<section class="section wrap" data-hide-after="{{ games.startsAt }}">
   <p class="eyebrow">The Invitation</p>
   <h2>You are cordially invited</h2>
   {%- if games.invitation.lede %}
