@@ -2,5 +2,28 @@
   "startsAt": "2027-05-16T09:30:00-04:00",
   "endsAt": "2027-05-16T12:00:00-04:00",
   "place": "Shaker Heights, OH",
-  "tagline": "Feats of strength & good sportsmanship."
+  "tagline": "Feats of strength & good sportsmanship.",
+
+  "events": [
+    {
+      "name": "The Mile",
+      "description": "Race with your oldest child in a stroller, wagon, or whatever they can safely ride on. Roughly 1.2 miles on quiet neighborhood roads. Keep them safe and close.",
+      "summary": "Rochester, Shelburne, Rocklyn, Stanford."
+    },
+    {
+      "name": "Run & Carry",
+      "description": "About 300 yards, out and back. On the way out your child rides, pedals, or drives the vehicle of their choice. On the way back, dad carries the vehicle. The child may run back or be carried.",
+      "summary": "Out and back, roughly 300 yards."
+    },
+    {
+      "name": "Overhead Press & Hold",
+      "description": "Press your oldest child overhead with one or two hands and keep them above shoulder height, with no resting on your head or shoulder. Everyone starts together. Last child aloft wins.",
+      "summary": "Head to head. Last child aloft wins."
+    },
+    {
+      "name": "Entire Family Carry",
+      "description": "Carry all of your children at once for a quick out-and-back across the lawn. You may set them down to adjust, but you cannot move unless everyone is off the ground.",
+      "summary": "Heats by number of children."
+    }
+  ]
 }
