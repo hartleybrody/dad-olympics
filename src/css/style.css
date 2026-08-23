@@ -310,6 +310,69 @@ a:hover {
   content: "";
 }
 
+/* ---------- Podium (winners) ---------- */
+
+/* Filled in from games.winners after the closing ceremony; the section
+   doesn't render at all until then (see games-page.njk). Built on the same
+   row pattern as .schedule — Anton tabular numerals, alternating Counter
+   Mint tint — with gold reserved for the first-place row, per
+   marketing/branding.md: "Podium, results, first place only." */
+.podium {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  border: var(--keyline) solid var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.podium li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 1rem;
+  padding: 0.85rem 1.25rem;
+}
+
+.podium li:nth-child(even) {
+  background: rgba(156, 199, 182, 0.32);
+}
+
+.podium li.podium-first {
+  background: var(--gold);
+}
+
+.podium .ord {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--teal-dark);
+  min-width: 2.6ch;
+}
+
+.podium li.podium-first .ord {
+  color: var(--ink);
+}
+
+.podium .name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  flex: 1 1 14rem;
+}
+
+.podium .note {
+  color: rgba(51, 38, 28, 0.8);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.podium li.podium-first .note {
+  color: var(--ink);
+}
+
 /* ---------- Countdown ---------- */
 
 /* The band sits directly under the hero, so it's cream rather than teal —

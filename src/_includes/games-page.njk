@@ -49,6 +49,36 @@
 </section>
 
 {#
+  The podium. Filled in after the closing ceremony — games.winners starts out
+  null in the data file and the section simply doesn't render until it's a
+  real list (see sectionsWithContent in lib/years.js). Sits directly under
+  the hero because it's the first thing worth telling a visitor once the
+  games are over, ahead of the countdown, which by then has nothing left to
+  count down to.
+
+  Ties share a place number rather than being renumbered around — two silver
+  finishers are both "2nd," and there's no bronze that year. winner.tied is
+  redundant with two entries sharing a place, but it's what drives the
+  "Tied" label without the template having to detect duplicates itself.
+#}
+{% if games.sections.winners %}
+{% set placeWords = {1: "1st", 2: "2nd", 3: "3rd"} %}
+<section class="section wrap" id="winners">
+  <p class="eyebrow">The Results Are In</p>
+  <h2>The Podium</h2>
+  <ol class="podium">
+    {%- for winner in games.winners %}
+    <li{% if winner.medal == "gold" %} class="podium-first"{% endif %}>
+      <span class="ord">{{ placeWords[winner.place] or winner.place }}</span>
+      <span class="name">{{ winner.name }}</span>
+      <span class="note">{{ winner.medal | capitalize }}{% if winner.tied %} · Tied{% endif %}</span>
+    </li>
+    {%- endfor %}
+  </ol>
+</section>
+{% endif %}
+
+{#
   The countdown to the start of the games.
 
   It ships hidden and the script reveals it, rather than the build deciding

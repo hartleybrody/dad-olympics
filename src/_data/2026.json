@@ -5,6 +5,12 @@
   "registerUrl": "https://forms.gle/KV5KtiPR5BJsvwXw7",
   "tagline": "Feats of strength & good sportsmanship.",
 
+  "winners": [
+    { "place": 1, "medal": "gold", "name": "Stephen M", "tied": false },
+    { "place": 2, "medal": "silver", "name": "John C", "tied": true },
+    { "place": 2, "medal": "silver", "name": "Nick B", "tied": true }
+  ],
+
   "invitation": {
     "lede": "One mile with a stroller, three hundred yards carrying a scooter, and the return of the overhead press. New this year: the entire family carry.",
     "paragraphs": [
@@ -17,7 +23,7 @@
     {
       "name": "The Mile",
       "description": "Race with your oldest child in a stroller, wagon, or whatever they can safely ride on. Roughly 1.2 miles on quiet neighborhood roads. Keep them safe and close.",
-      "summary": "Roughly 1.2 miles, neighborhood roads."
+      "summary": "Rochester, Shelburne, Rocklyn, Stanford."
     },
     {
       "name": "Run & Carry",

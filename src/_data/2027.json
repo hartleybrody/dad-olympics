@@ -4,11 +4,13 @@
   "place": "Shaker Heights, OH",
   "tagline": "Feats of strength & good sportsmanship.",
 
+  "winners": null,
+
   "events": [
     {
       "name": "The Mile",
       "description": "Race with your oldest child in a stroller, wagon, or whatever they can safely ride on. Roughly 1.2 miles on quiet neighborhood roads. Keep them safe and close.",
-      "summary": "Roughly 1.2 miles, neighborhood roads."
+      "summary": "Rochester, Shelburne, Rocklyn, Stanford."
     },
     {
       "name": "Run & Carry",
