@@ -25,5 +25,24 @@
       "description": "Carry all of your children at once for a quick out-and-back across the lawn. You may set them down to adjust, but you cannot move unless everyone is off the ground.",
       "summary": "Heats by number of children."
     }
-  ]
+  ],
+
+  "schedule": {
+    "before": [
+      {
+        "name": "Registration & Check-In",
+        "note": "Bib numbers assigned, teams registered."
+      },
+      {
+        "name": "Opening Ceremony",
+        "note": "Announcements, disclaimers, and the lighting of the torch."
+      }
+    ],
+    "after": [
+      {
+        "name": "Closing Ceremony",
+        "note": "Top five point scorers announced. Gold, silver, and bronze to the top three dads and children."
+      }
+    ]
+  }
 }
